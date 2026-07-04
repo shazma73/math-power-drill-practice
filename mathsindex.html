@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Power Stack · warm-up drill</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ── reset & base ── */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        html,
+        body {
+            height: 100%;
+        }
+        body {
+            min-height: 100vh;
+            background: #F5EFE8;
+            background-image:
+                radial-gradient(ellipse at 20% 10%, rgba(201, 123, 90, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 85%, rgba(122, 155, 138, 0.10) 0%, transparent 45%),
+                radial-gradient(ellipse at 50% 50%, rgba(212, 163, 115, 0.04) 0%, transparent 70%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px 16px;
+            overflow-x: hidden;
+            color: #2D2A24;
+        }
+
+        /* ── app shell ── */
+        .app {
+            width: 100%;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        /* ── header ── */
+        .header {
+            text-align: center;
+            margin-bottom: 28px;
+            padding: 0 4px;
+        }
+        .header-badge {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            color: #C97B5A;
+            background: rgba(201, 123, 90, 0.12);
+            padding: 4px 16px;
+            border-radius: 100px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+        .header h1 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: clamp(32px, 7vw, 48px);
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            color: #2D2A24;
+            margin-bottom: 6px;
+        }
+        .header h1 span {
+            color: #C97B5A;
+        }
+        .header .sub {
+            font-size: clamp(14px, 1.6vw, 17px);
+            color: #6B655A;
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.6;
+            font-weight: 400;
+            letter-spacing: 0.01em;
+        }
+        .header .sub em {
+            color: #7A9B8A;
+            font-style: normal;
+            font-weight: 500;
+        }
+
+        /* ── controls ── */
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 10px;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 28px;
+            padding: 0 2px;
+        }
+        .chip-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: #FFFFFF;
+            border: 1px solid #E2D8CE;
+            border-radius: 100px;
+            padding: 4px;
+            box-shadow: 0 2px 6px rgba(45, 42, 36, 0.04);
+            flex-wrap: wrap;
+        }
+        .chip-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: #9A9082;
+            padding: 0 6px 0 12px;
+            font-weight: 500;
+        }
+        .chip {
+            border: none;
+            background: transparent;
+            color: #6B655A;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 100px;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+        }
+        .chip:hover {
+            color: #2D2A24;
+            background: rgba(201, 123, 90, 0.06);
+        }
+        .chip:active {
+            transform: scale(0.95);
+        }
+        .chip.active {
+            background: #C97B5A;
+            color: #FEFCF9;
+            font-weight: 600;
+            box-shadow: 0 2px 8px rgba(201, 123, 90, 0.25);
+        }
+        .chip.active:hover {
+            background: #B86A4A;
+        }
+
+        .sound-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid #E2D8CE;
+            background: #FFFFFF;
+            color: #6B655A;
+            border-radius: 100px;
+            padding: 7px 16px 7px 14px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 6px rgba(45, 42, 36, 0.04);
+            white-space: nowrap;
+        }
+        .sound-btn:hover {
+            border-color: #C97B5A;
+            color: #2D2A24;
+            box-shadow: 0 2px 10px rgba(201, 123, 90, 0.10);
+        }
+        .sound-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #C8C0B6;
+            transition: background 0.25s ease, box-shadow 0.25s ease;
+            flex-shrink: 0;
+        }
+        .sound-btn.on .sound-dot {
+            background: #C97B5A;
+            box-shadow: 0 0 10px rgba(201, 123, 90, 0.35);
+        }
+        .sound-btn.on {
+            border-color: #C97B5A;
+        }
+
+        /* ── card ── */
+        .card {
+            background: #FFFFFF;
+            border-radius: 28px;
+            padding: 34px 28px 28px;
+            box-shadow:
+                0 4px 20px rgba(45, 42, 36, 0.06),
+                0 1px 4px rgba(45, 42, 36, 0.04);
+            border: 1px solid rgba(226, 216, 206, 0.40);
+            position: relative;
+            transition: box-shadow 0.3s ease;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 32px;
+            right: 32px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #C97B5A, #D4A373, transparent);
+            opacity: 0.30;
+            border-radius: 0 0 4px 4px;
+        }
+
+        /* ── stack zone ── */
+        .stack-zone {
+            height: 88px;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            gap: 5px;
+            margin-bottom: 6px;
+            padding: 0 4px;
+        }
+        .block {
+            width: 24px;
+            background: #ECE5DC;
+            border-radius: 4px 4px 2px 2px;
+            transform: scaleY(0);
+            transform-origin: bottom;
+            opacity: 0;
+            transition: transform 0.40s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease, background 0.30s ease, border-color 0.30s ease;
+            border: 1px solid #D6CCC0;
+            will-change: transform;
+        }
+        .block.rise {
+            transform: scaleY(1);
+            opacity: 1;
+        }
+        .block.good {
+            background: #7A9B8A;
+            border-color: #5E7D6D;
+            box-shadow: 0 0 12px rgba(122, 155, 138, 0.15);
+        }
+        .block.bad {
+            background: #D4A373;
+            border-color: #BF8D5E;
+            box-shadow: 0 0 12px rgba(212, 163, 115, 0.15);
+        }
+
+        /* ── equation ── */
+        .equation-wrap {
+            text-align: center;
+            padding: 4px 0 2px;
+        }
+        .equation {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+            font-size: clamp(38px, 10vw, 64px);
+            line-height: 1.1;
+            letter-spacing: -0.01em;
+            color: #2D2A24;
+        }
+        .equation sup {
+            font-size: 0.48em;
+            color: #C97B5A;
+            vertical-align: super;
+            margin-left: 2px;
+            font-weight: 600;
+        }
+        .equation .eq-sign {
+            color: #B0A69A;
+            margin: 0 8px;
+            font-weight: 400;
+        }
+        .equation .eq-qmark {
+            color: #C97B5A;
+            font-weight: 400;
+        }
+
+        .expand-hint {
+            text-align: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13px;
+            color: #9A9082;
+            min-height: 22px;
+            margin: 2px 0 18px;
+            letter-spacing: 0.02em;
+            font-weight: 400;
+        }
+        .expand-hint strong {
+            color: #7A9B8A;
+            font-weight: 500;
+        }
+
+        /* ── form ── */
+        .form-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 4px;
+            min-width: 0;
+        }
+        .form-row input[type="text"] {
+            flex: 1;
+            min-width: 0;
+            width: 100%;
+            background: #F8F4EF;
+            border: 2px solid #E2D8CE;
+            color: #2D2A24;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: clamp(18px, 4vw, 24px);
+            text-align: center;
+            padding: 14px 14px;
+            border-radius: 14px;
+            outline: none;
+            transition: border-color 0.20s ease, box-shadow 0.20s ease, background 0.20s ease;
+            letter-spacing: 0.02em;
+            font-weight: 500;
+        }
+        .form-row input[type="text"]:focus {
+            border-color: #C97B5A;
+            box-shadow: 0 0 0 4px rgba(201, 123, 90, 0.10);
+            background: #FFFFFF;
+        }
+        .form-row input[type="text"]::placeholder {
+            color: #C8C0B6;
+            font-weight: 400;
+            font-size: 0.75em;
+        }
+        .form-row input.correct {
+            border-color: #7A9B8A;
+            box-shadow: 0 0 0 4px rgba(122, 155, 138, 0.12);
+            background: #F8FCF9;
+        }
+        .form-row input.wrong {
+            border-color: #D4A373;
+            box-shadow: 0 0 0 4px rgba(212, 163, 115, 0.12);
+            background: #FCF8F4;
+        }
+
+        .form-row button.submit {
+            background: #C97B5A;
+            color: #FEFCF9;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 15px;
+            padding: 0 24px;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: background 0.18s ease, transform 0.12s ease, box-shadow 0.18s ease;
+            white-space: nowrap;
+            box-shadow: 0 2px 8px rgba(201, 123, 90, 0.15);
+        }
+        .form-row button.submit:hover {
+            background: #B86A4A;
+            box-shadow: 0 4px 14px rgba(201, 123, 90, 0.20);
+        }
+        .form-row button.submit:active {
+            transform: scale(0.96);
+        }
+        .form-row button.submit:disabled {
+            opacity: 0.35;
+            cursor: default;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* ── feedback ── */
+        .feedback {
+            min-height: 36px;
+            text-align: center;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 15px;
+            margin-top: 12px;
+            opacity: 0;
+            transform: translateY(6px);
+            transition: opacity 0.30s ease, transform 0.30s ease;
+            font-weight: 500;
+        }
+        .feedback.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .feedback.good {
+            color: #5E7D6D;
+        }
+        .feedback.bad {
+            color: #BF8D5E;
+        }
+        .feedback .answer-pill {
+            display: inline-block;
+            background: rgba(122, 155, 138, 0.10);
+            color: #5E7D6D;
+            padding: 2px 12px;
+            border-radius: 8px;
+            margin-left: 6px;
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+        .feedback.bad .answer-pill {
+            background: rgba(212, 163, 115, 0.12);
+            color: #BF8D5E;
+        }
+
+        /* ── next button ── */
+        .next-row {
+            display: flex;
+            justify-content: center;
+            margin-top: 16px;
+        }
+        .next-btn {
+            background: transparent;
+            border: 1.5px solid #E2D8CE;
+            color: #6B655A;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12.5px;
+            font-weight: 500;
+            padding: 10px 24px;
+            border-radius: 100px;
+            cursor: pointer;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s ease, border-color 0.20s ease, color 0.20s ease, background 0.20s ease, transform 0.15s ease;
+        }
+        .next-btn.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .next-btn:hover {
+            border-color: #C97B5A;
+            color: #C97B5A;
+            background: rgba(201, 123, 90, 0.04);
+        }
+        .next-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* ── footer ── */
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            color: #B0A69A;
+            font-size: 12px;
+            font-family: 'IBM Plex Mono', monospace;
+            letter-spacing: 0.03em;
+            line-height: 1.6;
+        }
+        .footer strong {
+            color: #6B655A;
+            font-weight: 500;
+        }
+
+        /* ── responsive ── */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px 10px;
+            }
+            .card {
+                padding: 24px 16px 20px;
+                border-radius: 22px;
+            }
+            .controls {
+                gap: 6px;
+            }
+            .chip-group {
+                padding: 3px;
+            }
+            .chip {
+                font-size: 11px;
+                padding: 5px 10px;
+            }
+            .chip-label {
+                font-size: 9px;
+                padding: 0 4px 0 8px;
+            }
+            .sound-btn {
+                font-size: 11px;
+                padding: 5px 12px 5px 10px;
+                gap: 6px;
+            }
+            .sound-dot {
+                width: 6px;
+                height: 6px;
+            }
+            .form-row {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .form-row button.submit {
+                padding: 14px;
+                font-size: 14px;
+                width: 100%;
+            }
+            .form-row input[type="text"] {
+                font-size: 20px;
+                padding: 12px 12px;
+            }
+            .stack-zone {
+                height: 70px;
+                gap: 4px;
+            }
+            .block {
+                width: 18px;
+            }
+            .equation {
+                font-size: clamp(32px, 10vw, 44px);
+            }
+            .feedback {
+                font-size: 13px;
+                min-height: 32px;
+            }
+            .next-btn {
+                font-size: 11px;
+                padding: 8px 18px;
+            }
+            .header {
+                margin-bottom: 20px;
+            }
+            .header .sub {
+                font-size: 13px;
+            }
+            .card::before {
+                left: 16px;
+                right: 16px;
+            }
+            .expand-hint {
+                font-size: 11px;
+                min-height: 18px;
+                margin-bottom: 14px;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .chip {
+                font-size: 10px;
+                padding: 4px 8px;
+            }
+            .chip-label {
+                font-size: 8px;
+                padding: 0 3px 0 6px;
+            }
+            .sound-btn {
+                font-size: 10px;
+                padding: 4px 10px 4px 8px;
+            }
+            .form-row input[type="text"] {
+                font-size: 18px;
+                padding: 10px 10px;
+            }
+            .form-row button.submit {
+                font-size: 13px;
+                padding: 12px;
+            }
+            .block {
+                width: 15px;
+            }
+            .stack-zone {
+                height: 60px;
+                gap: 3px;
+            }
+            .equation {
+                font-size: clamp(26px, 9vw, 36px);
+            }
+            .card {
+                padding: 18px 12px 16px;
+            }
+        }
+
+        /* ── reduce motion ── */
+        @media (prefers-reduced-motion: reduce) {
+            .block,
+            .feedback,
+            .next-btn,
+            .chip,
+            .form-row input,
+            .form-row button {
+                transition: none !important;
+                animation: none !important;
+            }
+            .block.rise {
+                transform: scaleY(1) !important;
+                opacity: 1 !important;
+            }
+        }
+
+        /* ── a tiny floating accent ── */
+        .floating-accent {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            background: radial-gradient(circle, rgba(201, 123, 90, 0.04), transparent 70%);
+            z-index: -1;
+        }
+        .floating-accent.a {
+            width: 300px;
+            height: 300px;
+            top: -80px;
+            right: -60px;
+        }
+        .floating-accent.b {
+            width: 200px;
+            height: 200px;
+            bottom: -40px;
+            left: -40px;
+            background: radial-gradient(circle, rgba(122, 155, 138, 0.05), transparent 70%);
+        }
+        @media (max-width: 480px) {
+            .floating-accent.a {
+                width: 160px;
+                height: 160px;
+                top: -40px;
+                right: -30px;
+            }
+            .floating-accent.b {
+                width: 120px;
+                height: 120px;
+                bottom: -20px;
+                left: -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- floating background accents -->
+    <div class="floating-accent a"></div>
+    <div class="floating-accent b"></div>
+
+    <div class="app">
+        <!-- header -->
+        <header class="header">
+            <div class="header-badge">✦ index drill</div>
+            <h1>Power <span>Stack</span></h1>
+            <p class="sub">
+                One equation at a time. Type the value, hit enter, watch it stack.
+                <br>No scores, no streaks — just <em>reps until it's automatic</em>.
+            </p>
+        </header>
+
+        <!-- controls -->
+        <div class="controls">
+            <div class="chip-group">
+                <span class="chip-label">base</span>
+                <button class="chip" data-basemax="10">1–10</button>
+                <button class="chip active" data-basemax="20">1–20</button>
+            </div>
+            <div class="chip-group">
+                <span class="chip-label">power</span>
+                <button class="chip" data-expmax="3">1–3</button>
+                <button class="chip" data-expmax="5">1–5</button>
+                <button class="chip active" data-expmax="10">1–10</button>
+            </div>
+            <button class="sound-btn" id="soundBtn">
+                <span class="sound-dot"></span>
+                <span id="soundLabel">ambience</span>
+            </button>
+        </div>
+
+        <!-- card -->
+        <div class="card">
+            <div class="stack-zone" id="stackZone"></div>
+
+            <div class="equation-wrap">
+                <div class="equation" id="equation">
+                    7<sup>3</sup><span class="eq-sign">=</span><span class="eq-qmark">?</span>
+                </div>
+            </div>
+            <div class="expand-hint" id="expandHint">&nbsp;</div>
+
+            <form class="form-row" id="quizForm" autocomplete="off">
+                <input type="text" id="answerInput" inputmode="numeric" placeholder="your answer" />
+                <button type="submit" class="submit" id="submitBtn">Check</button>
+            </form>
+
+            <div class="feedback" id="feedback"></div>
+
+            <div class="next-row">
+                <button class="next-btn" id="nextBtn" type="button">Next equation →</button>
+            </div>
+        </div>
+
+        <footer class="footer">
+            Cambridge O Level · powers of <strong>1–20</strong> up to the <strong>10th</strong> · practice as long as it takes
+        </footer>
+    </div>
+
+    <script>
+        (function() {
+            'use strict';
+
+            // ── DOM refs ──
+            const stackZone = document.getElementById('stackZone');
+            const equationEl = document.getElementById('equation');
+            const expandHint = document.getElementById('expandHint');
+            const form = document.getElementById('quizForm');
+            const input = document.getElementById('answerInput');
+            const submitBtn = document.getElementById('submitBtn');
+            const feedback = document.getElementById('feedback');
+            const nextBtn = document.getElementById('nextBtn');
+            const soundBtn = document.getElementById('soundBtn');
+            const soundLabel = document.getElementById('soundLabel');
+
+            // ── state ──
+            let baseMax = 20;
+            let expMax = 10;
+            let current = null; // { base, exp, answer }
+            let answered = false;
+
+            // ── range chips ──
+            document.querySelectorAll('[data-basemax]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('[data-basemax]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    baseMax = parseInt(this.dataset.basemax, 10);
+                    newQuestion();
+                });
+            });
+            document.querySelectorAll('[data-expmax]').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('[data-expmax]').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    expMax = parseInt(this.dataset.expmax, 10);
+                    newQuestion();
+                });
+            });
+
+            // ── helpers ──
+            function randInt(min, max) {
+                return Math.floor(Math.random() * (max - min + 1)) + min;
+            }
+
+            function buildStackShell(exp) {
+                stackZone.innerHTML = '';
+                const blocks = [];
+                const maxH = 78;
+                const minH = 12;
+                for (let i = 0; i < exp; i++) {
+                    const b = document.createElement('div');
+                    b.className = 'block';
+                    const ratio = exp > 1 ? i / (exp - 1) : 0.5;
+                    const h = minH + ratio * (maxH - minH);
+                    b.style.height = Math.min(h, maxH) + 'px';
+                    b.style.width = exp > 6 ? '18px' : (exp > 4 ? '20px' : '24px');
+                    stackZone.appendChild(b);
+                    blocks.push(b);
+                }
+                return blocks;
+            }
+
+            // ── new question ──
+            function newQuestion() {
+                answered = false;
+                const base = randInt(2, baseMax);
+                const exp = randInt(1, expMax);
+                let answer = 1;
+                for (let i = 0; i < exp; i++) answer *= base;
+                current = { base, exp, answer };
+
+                equationEl.innerHTML =
+                    `${base}<sup>${exp}</sup><span class="eq-sign">=</span><span class="eq-qmark">?</span>`;
+
+                expandHint.innerHTML = exp > 1 ?
+                    `${Array(exp).fill(base).join(' × ')}` :
+                    '&nbsp;';
+
+                buildStackShell(exp);
+
+                feedback.className = 'feedback';
+                feedback.textContent = '';
+                nextBtn.classList.remove('show');
+                input.value = '';
+                input.className = '';
+                submitBtn.disabled = false;
+                input.focus();
+
+                // reset any lingering block classes after a moment
+                setTimeout(() => {
+                    document.querySelectorAll('.block').forEach(b => {
+                        b.classList.remove('good', 'bad');
+                    });
+                }, 50);
+            }
+
+            // ── animate stack ──
+            function animateStack(correct) {
+                const blocks = Array.from(stackZone.children);
+                blocks.forEach((b, i) => {
+                    const delay = i * 80 + 40;
+                    setTimeout(() => {
+                        b.classList.add('rise');
+                        b.classList.add(correct ? 'good' : 'bad');
+                        playTick();
+                    }, delay);
+                });
+                // extra tick at the end
+                setTimeout(() => playTick(), blocks.length * 80 + 160);
+            }
+
+            // ── check answer ──
+            function checkAnswer(e) {
+                e.preventDefault();
+                if (answered || !current) return;
+                const val = input.value.trim();
+                if (val === '') return;
+                const guess = Number(val);
+                if (isNaN(guess)) {
+                    input.value = '';
+                    input.focus();
+                    return;
+                }
+                const correct = guess === current.answer;
+                answered = true;
+                submitBtn.disabled = true;
+
+                input.className = correct ? 'correct' : 'wrong';
+                animateStack(correct);
+
+                feedback.classList.add('show');
+                if (correct) {
+                    feedback.className = 'feedback show good';
+                    feedback.innerHTML =
+                        `✓ Correct — ${current.base}<sup>${current.exp}</sup> = <span class="answer-pill">${current.answer}</span>`;
+                    playChime(true);
+                } else {
+                    feedback.className = 'feedback show bad';
+                    feedback.innerHTML =
+                        `✗ Not quite. ${current.base}<sup>${current.exp}</sup> = <span class="answer-pill">${current.answer}</span>`;
+                    playChime(false);
+                }
+
+                setTimeout(() => {
+                    nextBtn.classList.add('show');
+                }, 280);
+            }
+
+            form.addEventListener('submit', checkAnswer);
+            nextBtn.addEventListener('click', newQuestion);
+
+            // ── enter key from input also triggers check ──
+            input.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    form.dispatchEvent(new Event('submit'));
+                }
+            });
+
+            // ── synthesized ambience ──
+            let audioCtx = null;
+            let ambienceOn = false;
+            let padNodes = [];
+            let noiseNode = null;
+            let masterGain = null;
+
+            function ensureCtx() {
+                if (!audioCtx) {
+                    audioCtx = new(window.AudioContext || window.webkitAudioContext)();
+                }
+                return audioCtx;
+            }
+
+            function startAmbience() {
+                const ctx = ensureCtx();
+                if (ctx.state === 'suspended') ctx.resume();
+
+                const master = ctx.createGain();
+                master.gain.value = 0.0;
+                master.connect(ctx.destination);
+                masterGain = master;
+                master.gain.linearRampToValueAtTime(0.035, ctx.currentTime + 2.2);
+
+                // warm pad: A2, C#3, E3, A3 with subtle detuning
+                const freqs = [110, 138.6, 164.8, 220];
+                freqs.forEach((f, idx) => {
+                    const osc = ctx.createOscillator();
+                    osc.type = 'sine';
+                    osc.frequency.value = f + (idx * 0.15);
+                    const lfo = ctx.createOscillator();
+                    lfo.frequency.value = 0.04 + idx * 0.008;
+                    const lfoGain = ctx.createGain();
+                    lfoGain.gain.value = 1.2 + idx * 0.2;
+                    lfo.connect(lfoGain);
+                    lfoGain.connect(osc.frequency);
+                    lfo.start();
+
+                    const g = ctx.createGain();
+                    g.gain.value = 0.12 - idx * 0.015;
+                    osc.connect(g);
+                    g.connect(master);
+                    osc.start();
+                    padNodes.push(osc, lfo, g);
+                });
+
+                // filtered noise for warmth
+                const bufSize = 2 * ctx.sampleRate;
+                const buffer = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufSize; i++) {
+                    data[i] = (Math.random() * 2 - 1) * 0.4;
+                }
+                const noise = ctx.createBufferSource();
+                noise.buffer = buffer;
+                noise.loop = true;
+                const filter = ctx.createBiquadFilter();
+                filter.type = 'lowpass';
+                filter.frequency.value = 700;
+                filter.Q.value = 0.8;
+                const noiseGain = ctx.createGain();
+                noiseGain.gain.value = 0.025;
+                noise.connect(filter);
+                filter.connect(noiseGain);
+                noiseGain.connect(master);
+                noise.start();
+                noiseNode = noise;
+                padNodes.push(master, noiseGain, filter);
+            }
+
+            function stopAmbience() {
+                padNodes.forEach(n => {
+                    try { n.stop && n.stop(); } catch (_) {}
+                    try { n.disconnect && n.disconnect(); } catch (_) {}
+                });
+                padNodes = [];
+                if (noiseNode) {
+                    try { noiseNode.stop(); } catch (_) {}
+                    noiseNode = null;
+                }
+                if (masterGain) {
+                    try { masterGain.disconnect && masterGain.disconnect(); } catch (_) {}
+                    masterGain = null;
+                }
+            }
+
+            function playTick() {
+                if (!ambienceOn || !audioCtx) return;
+                const ctx = audioCtx;
+                try {
+                    const osc = ctx.createOscillator();
+                    const g = ctx.createGain();
+                    osc.type = 'sine';
+                    osc.frequency.value = 520 + Math.random() * 40;
+                    g.gain.value = 0.035;
+                    g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 0.10);
+                    osc.connect(g);
+                    g.connect(ctx.destination);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.10);
+                } catch (_) {}
+            }
+
+            function playChime(correct) {
+                const ctx = ensureCtx();
+                try {
+                    const freqs = correct ? [523.25, 659.25, 783.99, 1046.50] : [220, 277.18, 329.63];
+                    freqs.forEach((f, i) => {
+                        const osc = ctx.createOscillator();
+                        const g = ctx.createGain();
+                        osc.type = 'sine';
+                        osc.frequency.value = f;
+                        const start = ctx.currentTime + i * 0.07;
+                        g.gain.setValueAtTime(0.0001, start);
+                        g.gain.linearRampToValueAtTime(correct ? 0.055 : 0.04, start + 0.025);
+                        g.gain.exponentialRampToValueAtTime(0.0001, start + 0.45);
+                        osc.connect(g);
+                        g.connect(ctx.destination);
+                        osc.start(start);
+                        osc.stop(start + 0.48);
+                    });
+                } catch (_) {}
+            }
+
+            soundBtn.addEventListener('click', () => {
+                ambienceOn = !ambienceOn;
+                soundBtn.classList.toggle('on', ambienceOn);
+                soundLabel.textContent = ambienceOn ? 'ambience on' : 'ambience';
+                if (ambienceOn) {
+                    if (audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+                    startAmbience();
+                } else {
+                    stopAmbience();
+                }
+            });
+
+            // ── kick off ──
+            newQuestion();
+
+        })();
+    </script>
+
+</body>
+</html>
